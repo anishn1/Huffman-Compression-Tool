@@ -24,3 +24,16 @@ Node *buildHuffmanTree(std::unordered_map<unsigned char, int>& freq) {
   Node *root = pq.top();
   return root;
 }
+
+void makeCodes(Node *root, std::string code, std::unordered_map<unsigned char, std::string>& codes) {
+  if (!root) {
+    return;
+  }
+  // leaf
+  if (!root->left && !root->right) {
+    codes[root->c] = code;
+    return;
+  }
+  makeCodes(root->left, code + "0", codes);
+  makeCodes(root->right, code + "1", codes);
+}
