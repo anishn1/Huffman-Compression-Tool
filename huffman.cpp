@@ -37,3 +37,17 @@ void makeCodes(Node *root, std::string code, std::unordered_map<unsigned char, s
   makeCodes(root->left, code + "0", codes);
   makeCodes(root->right, code + "1", codes);
 }
+
+std::unordered_map<unsigned char, int> countFreq(const std::string& filename) {
+  std::ifstream input(filename, std::ios::binary);
+  if (!input) {
+    std::cerr << "Error opening file " << filename << std::endl;
+  }
+  std::unordered_map<unsigned char, int> freqs;
+  unsigned char byte;
+  while (input.read(reinterpret_cast<char*>(&byte), sizeof(input))) {
+    freqs[byte]++;
+  }
+  return freqs;
+
+}
