@@ -96,3 +96,24 @@ void encode(std::string& inputFile, std::string& outputFile, std::unordered_map<
     output.write(reinterpret_cast<char*>(&buff), 1);
   }
 }
+
+int main(int argc, char *argv[]) {
+  if (argc < 4) {
+    printf("Usage: ./huffman <compress|decompress> <input> <output>\n");
+    return 1;
+  }
+  std::string mode = argv[1];
+  std::string inputFile = argv[2];
+  std::string outputFile = argv[3];
+  if (mode == "compress") {
+    auto freqs = countFreq(inputFile);
+    auto root = buildHuffmanTree(freqs);
+    std::unordered_map<unsigned char, std::string> codes;
+    makeCodes(root, "", codes);
+    encode(inputFile, outputFile, freqs, codes);
+    std::cerr << "Encoded file " << outputFile << "\n";
+  } else {
+    std::cerr << "Unknown mode: " << mode << "\n";
+    return 1;
+  }
+}
