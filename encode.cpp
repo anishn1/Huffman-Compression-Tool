@@ -1,6 +1,7 @@
 
 #include "encode.h"
 
+#include <cstdint>
 #include <string>
 #include <unordered_map>
 #include <fstream>
@@ -14,9 +15,9 @@ void encode(std::string& inputFile, std::string& outputFile, std::unordered_map<
   if (!output) throw std::runtime_error("Could not create output file");
 
   // origSize added
-  std::streamsize inputSize = input.tellg();
+  uint64_t inputSize = input.tellg();
   input.seekg(0);
-  output.write(reinterpret_cast<char*>(&inputSize), sizeof(std::streamsize));
+  output.write(reinterpret_cast<char*>(&inputSize), sizeof(uint64_t));
 
   // freqTable added
   for (int i = 0; i < 256; i++) {
