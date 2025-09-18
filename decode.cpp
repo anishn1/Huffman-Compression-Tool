@@ -43,6 +43,7 @@ void decode(std::string& inputFile, std::string& outputFile, Node *root, int ori
     std::cerr << "Error creating file " << outputFile << std::endl;
     return;
   }
+  input.seekg(sizeof(uint64_t) + (sizeof(int) * 256), std::ios::beg);
   unsigned char byte;
   int bitCount = 0;
   int size = 0;
