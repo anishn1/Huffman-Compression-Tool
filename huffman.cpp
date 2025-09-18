@@ -8,6 +8,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "decode.h"
+
 Node *buildHuffmanTree(std::unordered_map<unsigned char, int>& freq) {
   std::priority_queue<Node*, std::vector<Node*>, Compare> pq;
   for (int i = 0; i < 256; i++) {
@@ -71,6 +73,12 @@ int main(int argc, char *argv[]) {
     makeCodes(root, "", codes);
     encode(inputFile, outputFile, freqs, codes);
     std::cerr << "Encoded file " << outputFile << "\n";
+    return 0;
+  } else if (mode == "decompress") {
+    auto size = parseSize(inputFile);
+    auto freqs = parseFreqTable(inputFile);
+    auto root = buildHuffmanTree(freqs);
+    decode(inputFile, outputFile, root, size);
   } else {
     std::cerr << "Unknown mode: " << mode << "\n";
     return 1;
