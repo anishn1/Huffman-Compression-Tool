@@ -18,3 +18,13 @@ int parseSize(std::string& inputFile) {
   return size;
 }
 
+std::unordered_map<unsigned char, int> parseFreqTable(std::string& inputFile) {
+  std::ifstream input(inputFile, std::ios::binary);
+  std::unordered_map<unsigned char, int> freqs;
+  for (int i = 0; i < 256; i++) {
+    int freq;
+    input.read(reinterpret_cast<char*>(&freq), sizeof(int));
+    freqs[i] = freq;
+  }
+  return freqs;
+}
